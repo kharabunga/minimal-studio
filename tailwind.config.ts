@@ -9,20 +9,13 @@ export default {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1200px",
+        "2xl": "1000px",
       },
     },
     extend: {
       fontFamily: {
         serif: ["'Playfair Display'", "Georgia", "serif"],
         sans: ["'Inter'", "-apple-system", "sans-serif"],
-      },
-      fontSize: {
-        'nav': ['24px', { lineHeight: '1.2', fontWeight: '700' }],
-        'hero': ['clamp(3rem, 6vw, 5.5rem)', { lineHeight: '1.05' }],
-        'title': ['clamp(2.5rem, 5vw, 5rem)', { lineHeight: '1.1' }],
-        'subline': ['clamp(1.25rem, 2vw, 1.625rem)', { lineHeight: '1.5' }],
-        'body': ['clamp(1rem, 1.2vw, 1.25rem)', { lineHeight: '1.7' }],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -76,12 +69,20 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {

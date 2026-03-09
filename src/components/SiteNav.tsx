@@ -1,59 +1,79 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const links = [
-  { href: "#work", label: "WORK" },
-  { href: "#process", label: "PROCESS" },
-  { href: "#observations", label: "OBSERVATIONS" },
-  { href: "#work-with-me", label: "WORK WITH ME" },
+  { to: "/work", label: "Work" },
+  { to: "/process", label: "Process" },
+  { to: "/observations", label: "Observations" },
+  { to: "/about", label: "About" },
+  { to: "/work-with-me", label: "Work With Me" },
 ];
 
 const SiteNav = () => {
-  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm">
       <div className="container flex items-center justify-between py-5">
-        <a href="#" className="font-serif text-xl tracking-[-0.01em]">
+        <Link to="/" className="font-serif text-base tracking-[-0.01em]">
           Kharabunga Studios
-        </a>
-        <div className="hidden md:flex items-center gap-10">
+        </Link>
+        <div className="hidden md:flex items-center gap-7">
           {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-nav uppercase tracking-[0.06em] text-foreground hover:text-accent"
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`text-[13px] tracking-[0.04em] transition-colors hover:text-foreground ${
+                location.pathname === link.to
+                  ? "text-foreground"
+                  : "text-muted-foreground"
+              }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <MobileMenu />
       </div>
+    </nav>
+  );
+};
+
+const MobileMenu = () => {
+  const [open, setOpen] = React.useState(false);
+  const location = useLocation();
+
+  return (
+    <div className="md:hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="text-sm text-muted-foreground"
+      >
+        {open ? "Close" : "Menu"}
+      </button>
       {open && (
-        <div className="md:hidden bg-background border-b border-border py-8">
-          <div className="container flex flex-col gap-6">
+        <div className="absolute top-full left-0 right-0 bg-background border-b border-border py-6">
+          <div className="container flex flex-col gap-4">
             {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <Link
+                key={link.to}
+                to={link.to}
                 onClick={() => setOpen(false)}
-                className="text-nav uppercase tracking-[0.06em] text-foreground"
+                className={`text-sm tracking-wide ${
+                  location.pathname === link.to
+                    ? "text-foreground"
+                    : "text-muted-foreground"
+                }`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
       )}
-    </nav>
+    </div>
   );
 };
+
+import React from "react";
 
 export default SiteNav;
