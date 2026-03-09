@@ -40,10 +40,10 @@ const WorkWithMe = () => {
           <h3 className="font-serif text-xl">Get in touch</h3>
           <div className="flex flex-col gap-2 text-sm">
             <a
-              href="mailto:hello@kharabungastudios.com"
+              href="mailto:yo@kharabunga.com"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              hello@kharabungastudios.com
+              yo@kharabunga.com
             </a>
             <a
               href="https://instagram.com/kharabungastudios"

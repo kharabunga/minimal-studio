@@ -12,17 +12,17 @@ const SiteNav = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm">
-      <div className="container flex items-center justify-between py-6">
-        <Link to="/" className="font-serif text-lg tracking-tight">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm">
+      <div className="container flex items-center justify-between py-5">
+        <Link to="/" className="font-serif text-base tracking-[-0.01em]">
           Kharabunga Studios
         </Link>
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {links.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className={`text-sm tracking-wide transition-colors hover:text-foreground ${
+              className={`text-[13px] tracking-[0.04em] transition-colors hover:text-foreground ${
                 location.pathname === link.to
                   ? "text-foreground"
                   : "text-muted-foreground"
