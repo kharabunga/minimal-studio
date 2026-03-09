@@ -1,73 +1,43 @@
-# Welcome to your Lovable project
+[README.md](https://github.com/user-attachments/files/25835169/README.md)
+# Kharabunga Studios — Rewritten Source Files
 
-## Project info
+Drop these files into your existing minimal-studio repo, replacing the originals.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## File Map
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── App.tsx                          ← replaces src/App.tsx
+├── components/
+│   ├── SiteNav.tsx                  ← replaces src/components/SiteNav.tsx
+│   ├── PageLayout.tsx               ← replaces src/components/PageLayout.tsx
+│   ├── ImageCarousel.tsx            ← replaces src/components/ImageCarousel.tsx
+│   └── FullscreenModal.tsx          ← replaces src/components/FullscreenModal.tsx
+└── pages/
+    ├── Landing.tsx                  ← replaces src/pages/Landing.tsx
+    ├── Work.tsx                     ← replaces src/pages/Work.tsx
+    ├── Process.tsx                  ← replaces src/pages/Process.tsx
+    ├── Observations.tsx             ← replaces src/pages/Observations.tsx
+    ├── About.tsx                    ← replaces src/pages/About.tsx
+    ├── WorkWithMe.tsx               ← replaces src/pages/WorkWithMe.tsx
+    └── NotFound.tsx                 ← replaces src/pages/NotFound.tsx
 ```
 
-**Edit a file directly in GitHub**
+## Files you can DELETE
+- `src/pages/Index.tsx` — unused Lovable fallback
+- `src/components/NavLink.tsx` — unused wrapper
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Adding images later
+Every image placeholder shows its filename (e.g. "physical_star_cabinet.jpg").
+When you're ready to add real images:
+1. Put them in `public/images/` (or wherever you prefer)
+2. In each page file, update the `img()` helper's `src` from `""` to the path, e.g. `"/images/physical_star_cabinet.jpg"`
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Adding videos later
+Video placeholders in WorkWithMe.tsx show filenames.
+Replace the placeholder divs with `<video>` elements:
+```jsx
+<video autoPlay muted loop playsInline className="w-full">
+  <source src="/videos/magic_serious_about_the_work.mp4" type="video/mp4" />
+</video>
+```
