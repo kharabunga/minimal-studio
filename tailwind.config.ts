@@ -21,6 +21,7 @@ export default {
       fontFamily: {
         serif: ["'Playfair Display'", "Georgia", "serif"],
         sans: ["'Inter'", "-apple-system", "sans-serif"],
+        mono: ["'IBM Plex Mono'", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {
         cobalt: {
@@ -28,6 +29,18 @@ export default {
           light: "#1A5CBD",
           dark: "#003380",
         },
+        // intake homepage — desk palette
+        ink: {
+          DEFAULT: "#232F5C",
+          soft: "#3D4A7E",
+        },
+        cream: "#F0EADB",
+        paperwhite: "#FAF6EC",
+        pad: "#F5ECC2",
+        kraft: "#D8C099",
+        signal: "#C7431F",
+        amberglow: "#E2A93F",
+        graphite: "#26241E",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

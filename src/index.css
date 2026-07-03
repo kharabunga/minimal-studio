@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -31,6 +31,7 @@
 
     --font-serif: 'Playfair Display', Georgia, serif;
     --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
   }
 }
 
@@ -45,5 +46,77 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
+  }
+}
+
+/* ————————————————————————————————————————————————
+   Intake homepage — desk / instrument art direction
+   ———————————————————————————————————————————————— */
+
+.intake ::selection {
+  background: rgba(35, 47, 92, 0.9);
+  color: #f3eedf;
+}
+
+/* legal-pad ruling; line height must stay in step with .pad-line (34px) */
+.pad-ruling {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 33px,
+    rgba(146, 118, 60, 0.28) 33px,
+    rgba(146, 118, 60, 0.28) 34px
+  );
+}
+
+.pad-line {
+  min-height: 34px;
+  line-height: 34px;
+}
+
+/* faint paper grain over the whole desk */
+.desk-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+@keyframes intake-breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.0035); }
+}
+
+@keyframes intake-settle {
+  0% { opacity: 0; transform: translateY(-16px) rotate(var(--settle-rotate, 0deg)) scale(1.02); }
+  70% { opacity: 1; transform: translateY(2px) rotate(var(--settle-rotate, 0deg)); }
+  100% { opacity: 1; transform: translateY(0) rotate(var(--settle-rotate, 0deg)); }
+}
+
+@keyframes intake-inkline {
+  0% { opacity: 0; transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes intake-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0.15; }
+}
+
+@keyframes intake-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+.anim-breathe { animation: intake-breathe 7s ease-in-out infinite; }
+.anim-settle { animation: intake-settle 0.55s cubic-bezier(0.22, 0.9, 0.3, 1.05) both; }
+.anim-inkline { animation: intake-inkline 0.45s ease-out both; }
+.anim-blink { animation: intake-blink 1.3s steps(1) infinite; }
+.anim-drift { animation: intake-drift 2.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-breathe,
+  .anim-settle,
+  .anim-inkline,
+  .anim-blink,
+  .anim-drift {
+    animation: none;
   }
 }
