@@ -31,8 +31,8 @@ const getSpeechRecognition = (): SpeechRecognitionCtor | null => {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 };
 
-const BAR_COUNT = 60;
-const INK = "#2A3765";
+const BAR_COUNT = 48;
+const BAR_INK = "#3A3831";
 
 // deterministic idle waveform so the resting instrument reads as a printed
 // object rather than random noise on every load
@@ -99,11 +99,11 @@ const Recorder = ({
     ctx.clearRect(0, 0, width, height);
 
     const gap = width / BAR_COUNT;
-    const barWidth = Math.max(1.5, gap * 0.42);
+    const barWidth = Math.max(1.5, gap * 0.4);
     const mid = height / 2;
-    ctx.fillStyle = INK;
+    ctx.fillStyle = BAR_INK;
     for (let i = 0; i < BAR_COUNT; i++) {
-      const h = Math.max(2, heights[i] * (height * 0.82));
+      const h = Math.max(2, heights[i] * (height * 0.9));
       const x = i * gap + (gap - barWidth) / 2;
       ctx.fillRect(x, mid - h / 2, barWidth, h);
     }
@@ -279,11 +279,11 @@ const Recorder = ({
   }, []);
 
   const recording = status === "recording";
-  const statusLabel = status === "denied" ? "MIC OFF — TYPE BELOW" : recording ? "REC" : "READY";
+  const statusLabel = status === "denied" ? "MIC OFF" : recording ? "REC" : "READY";
 
   return (
     <div
-      className="anim-breathe group relative mx-auto w-full max-w-[680px]"
+      className="anim-breathe group relative mx-auto w-full max-w-[880px]"
       onMouseEnter={() => {
         hoverRef.current = true;
         wake();
@@ -292,100 +292,90 @@ const Recorder = ({
         hoverRef.current = false;
       }}
     >
-      {/* body */}
+      {/* instrument bar */}
       <div
-        className="relative rounded-[26px] border border-[#B9B2A2] p-[10px]
-          bg-gradient-to-b from-[#EFEBE1] via-[#DFD9CB] to-[#C9C2B1]
-          shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_30px_60px_-18px_rgba(38,36,30,0.45),0_10px_22px_-10px_rgba(38,36,30,0.3)]"
+        className="relative flex items-stretch overflow-hidden rounded-[20px] border border-[#BCB5A4]
+          bg-gradient-to-b from-[#F2EEE4] via-[#E7E2D4] to-[#D2CCBB]
+          shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_-1px_0_rgba(38,36,30,0.12)_inset,0_44px_80px_-24px_rgba(38,36,30,0.5),0_14px_28px_-12px_rgba(38,36,30,0.3)]"
       >
         {/* moving amber sheen */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 overflow-hidden rounded-[26px]"
-        >
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-[20px]">
           <div
             className="absolute -inset-y-8 -left-1/3 w-1/2 rotate-[18deg]
-              bg-gradient-to-r from-transparent via-amberglow/[0.14] to-transparent
-              transition-transform [transition-duration:1400ms] ease-out group-hover:translate-x-[70%]"
+              bg-gradient-to-r from-transparent via-amberglow/[0.16] to-transparent
+              transition-transform [transition-duration:1400ms] ease-out group-hover:translate-x-[80%]"
           />
         </div>
 
-        {/* face plate */}
-        <div
-          className="relative rounded-[18px] border border-[#CFC9BA] bg-gradient-to-b from-[#EAE6DA] to-[#DDD7C8]
-            px-5 pb-4 pt-5 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset] sm:px-7 sm:pb-5 sm:pt-6"
-        >
-          <div className="flex items-center gap-4 sm:gap-6">
-            {/* record button */}
-            <button
-              type="button"
-              onClick={toggle}
-              aria-pressed={recording}
-              aria-label={recording ? "Stop recording" : "Start recording a voice memo"}
-              className="relative grid h-16 w-16 shrink-0 place-items-center rounded-full
-                bg-gradient-to-b from-[#F2EEE4] to-[#C6BFAE]
-                shadow-[0_2px_5px_rgba(38,36,30,0.35),0_1px_0_rgba(255,255,255,0.8)_inset]
-                transition-transform duration-150 active:scale-[0.97] sm:h-[88px] sm:w-[88px]"
+        {/* record cell */}
+        <div className="flex items-center py-5 pl-5 pr-4 sm:py-8 sm:pl-9 sm:pr-8">
+          <button
+            type="button"
+            onClick={toggle}
+            aria-pressed={recording}
+            aria-label={recording ? "Stop recording" : "Start recording a voice memo"}
+            className="relative grid h-14 w-14 shrink-0 place-items-center rounded-full
+              bg-gradient-to-b from-[#F5F1E8] to-[#C8C1B0]
+              shadow-[0_3px_7px_rgba(38,36,30,0.35),0_1px_0_rgba(255,255,255,0.85)_inset]
+              transition-transform duration-150 active:scale-[0.97] sm:h-[76px] sm:w-[76px]"
+          >
+            <span
+              className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-b from-[#DAD4C4] to-[#EFEBE0]
+                shadow-[0_2px_5px_rgba(38,36,30,0.3)_inset] sm:h-14 sm:w-14"
             >
               <span
-                className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-b from-[#D8D2C2] to-[#EDE9DE]
-                  shadow-[0_2px_4px_rgba(38,36,30,0.35)_inset] sm:h-16 sm:w-16"
-              >
-                <span
-                  className={`block rounded-full bg-signal transition-all duration-300
-                    ${recording ? "h-5 w-5 rounded-[5px] shadow-[0_0_16px_rgba(199,67,31,0.8)] sm:h-6 sm:w-6" : "h-5 w-5 shadow-[0_1px_2px_rgba(120,30,10,0.6),0_0_0_1px_rgba(120,30,10,0.25)] sm:h-7 sm:w-7"}`}
-                />
-              </span>
-            </button>
-
-            {/* waveform window */}
-            <div
-              className="relative h-[72px] min-w-0 flex-1 overflow-hidden rounded-md border border-[#C5BEAD]
-                bg-[#E6E1D2] shadow-[0_3px_8px_rgba(38,36,30,0.22)_inset] sm:h-[92px]"
-            >
-              <canvas ref={canvasRef} className="h-full w-full" />
-              <div aria-hidden className="absolute inset-y-2 right-8 w-px bg-signal/70 sm:right-10" />
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/25 via-transparent to-transparent"
+                className={`block rounded-full bg-signal transition-all duration-300
+                  ${recording ? "h-4 w-4 rounded-[4px] shadow-[0_0_18px_rgba(199,67,31,0.85)] sm:h-5 sm:w-5" : "h-4 w-4 shadow-[0_1px_2px_rgba(120,30,10,0.6),0_0_0_1px_rgba(120,30,10,0.25)] sm:h-6 sm:w-6"}`}
               />
-            </div>
-
-            {/* readout */}
-            <div className="hidden shrink-0 flex-col items-end gap-2 sm:flex">
-              <span className="font-mono text-xl tabular-nums tracking-[0.08em] text-graphite/90">
-                {formatClock(elapsed)}
-              </span>
-              <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.18em] text-graphite/70">
-                <span
-                  className={`h-[7px] w-[7px] rounded-full ${recording ? "anim-blink bg-signal" : status === "denied" ? "bg-graphite/40" : "bg-signal/80"}`}
-                />
-                {statusLabel}
-              </span>
-              <span aria-hidden className="mt-1 grid grid-cols-6 gap-[5px]">
-                {Array.from({ length: 24 }, (_, i) => (
-                  <span key={i} className="h-[3.5px] w-[3.5px] rounded-full bg-graphite/30" />
-                ))}
-              </span>
-            </div>
-          </div>
-
-          {/* engraving */}
-          <div className="mt-4 flex items-start justify-between gap-4 border-t border-[#C9C2B1]/70 pt-3 sm:mt-5 sm:items-center">
-            <span className="font-mono text-[9px] leading-4 tracking-[0.22em] text-graphite/60 sm:text-[10px]">
-              VOICE MEMO&ensp;·&ensp;NO TIME LIMIT. RANT AWAY.
             </span>
-            <span className="shrink-0 font-mono text-[9px] leading-4 tracking-[0.22em] text-graphite/40 sm:hidden">
-              {recording ? formatClock(elapsed) : statusLabel}
-            </span>
-          </div>
+          </button>
+        </div>
+
+        <div
+          aria-hidden
+          className="my-5 w-px shrink-0 bg-gradient-to-b from-transparent via-[#BDB6A4] to-transparent sm:my-7"
+        />
+
+        {/* voice cell */}
+        <div className="flex min-w-0 flex-1 flex-col justify-center gap-3 px-4 sm:gap-4 sm:px-9">
+          <canvas ref={canvasRef} className="h-9 w-full max-w-[360px] sm:h-12" />
+          <span className="truncate font-mono text-[8px] tracking-[0.22em] text-graphite/55 sm:text-[10px] sm:tracking-[0.26em]">
+            VOICE MEMO&ensp;·&ensp;NO TIME LIMIT. RANT AWAY.
+          </span>
+        </div>
+
+        <div
+          aria-hidden
+          className="my-5 w-px shrink-0 bg-gradient-to-b from-transparent via-[#BDB6A4] to-transparent sm:my-7"
+        />
+
+        {/* readout cell */}
+        <div className="flex shrink-0 flex-col items-start justify-center gap-1.5 py-4 pl-4 pr-5 sm:gap-2 sm:pl-8 sm:pr-10">
+          <span className="font-mono text-base tabular-nums tracking-[0.1em] text-graphite/90 sm:text-2xl">
+            {formatClock(elapsed)}
+          </span>
+          <span
+            className={`flex items-center gap-1.5 font-mono text-[8px] tracking-[0.2em] sm:gap-2 sm:text-[10px]
+              ${status === "denied" ? "text-graphite/50" : "text-signal"}`}
+          >
+            <span
+              className={`h-[5px] w-[5px] rounded-full sm:h-[6px] sm:w-[6px]
+                ${recording ? "anim-blink bg-signal" : status === "denied" ? "bg-graphite/40" : "bg-signal"}`}
+            />
+            {statusLabel}
+          </span>
+          <span aria-hidden className="mt-1 hidden grid-cols-8 gap-[4px] sm:grid">
+            {Array.from({ length: 32 }, (_, i) => (
+              <span key={i} className="h-[3px] w-[3px] rounded-full bg-graphite/30" />
+            ))}
+          </span>
         </div>
       </div>
 
-      {/* desk shadow */}
+      {/* desk contact shadow */}
       <div
         aria-hidden
-        className="absolute -bottom-7 left-1/2 h-8 w-[86%] -translate-x-1/2 rounded-[50%] bg-graphite/25 blur-xl"
+        className="absolute -bottom-8 left-1/2 h-9 w-[88%] -translate-x-1/2 rounded-[50%] bg-graphite/30 blur-xl"
       />
     </div>
   );
